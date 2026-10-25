@@ -1,0 +1,30 @@
+project_id = "visacompass"
+
+[api]
+enabled = true
+schemas = ["public", "graphql_public"]
+extra_search_path = ["public", "extensions"]
+max_rows = 1000
+
+[db]
+shadow_port = 54320
+major_version = 17
+
+[db.migrations]
+schema_paths = ["./migrations/*.sql"]
+
+[db.seed]
+enabled = true
+sql_paths = ["./seed.sql"]
+
+[auth]
+enabled = true
+site_url = "http://localhost:3000"
+additional_redirect_urls = ["http://localhost:3000/auth/callback"]
+enable_signup = true
+
+[auth.email]
+enable_signup = true
+enable_confirmations = true
+double_confirm_changes = true
+secure_password_change = true

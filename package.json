@@ -1,0 +1,32 @@
+{
+  "name": "visacompass-mvp",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint",
+    "typecheck": "tsc --noEmit",
+    "test": "tsx --test lib/validation.test.ts lib/rate-limit.test.ts lib/entitlements.test.ts lib/providers/mock-provider.test.ts app/api/visa-check/route.test.ts"
+  },
+  "dependencies": {
+    "@supabase/ssr": "^0.12.7",
+    "@supabase/supabase-js": "^2.118.0",
+    "next": "^16.4.2",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "eslint": "^9.0.0",
+    "eslint-config-next": "^16.4.2",
+    "tsx": "^4.23.15",
+    "typescript": "^5.0.0"
+  },
+  "allowScripts": {
+    "unrs-resolver@1.12.2": true
+  }
+}

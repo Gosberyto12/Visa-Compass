@@ -1,0 +1,16 @@
+export const countries = [
+  { code: "TZ", name: "Tanzania" },
+  { code: "KE", name: "Kenya" },
+  { code: "UG", name: "Uganda" },
+  { code: "RW", name: "Rwanda" },
+  { code: "NG", name: "Nigeria" },
+  { code: "GH", name: "Ghana" },
+  { code: "ZA", name: "South Africa" },
+  { code: "GB", name: "United Kingdom" },
+  { code: "US", name: "United States" },
+  { code: "AE", name: "United Arab Emirates" },
+  { code: "IN", name: "India" },
+  { code: "FR", name: "France" },
+  { code: "CA", name: "Canada" },
+  { code: "AU", name: "Australia" },
+] as const;

@@ -1,0 +1,3 @@
+-- The versioned schema is maintained in supabase/migrations/.
+-- Apply migrations with the Supabase CLI; see README.md for setup instructions.
+-- Seed data contains countries only. No fabricated or unverified visa rules are seeded.
