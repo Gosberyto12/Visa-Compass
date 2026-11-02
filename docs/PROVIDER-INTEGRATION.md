@@ -3,10 +3,12 @@
 ## Current provider state
 
 - `mock` is the default and produces no real visa determination.
-- `database` reads source-backed, published VisaCompass rules through Supabase's public assessment view and RLS.
+- `database` reads source-backed, published VisaCompassAfrica rules through Supabase's public assessment view and RLS.
 - `sherpa` remains deliberately disabled. The starter has no verified Sherpa endpoint, authentication contract, payload schema, license, sandbox access or credentials.
 
-The provider interface accepts normalized nationality/destination ISO2 codes, travel purpose, arrival/departure dates and passport type. The UI only consumes VisaCompass result types.
+The provider interface accepts an African passport nationality, a destination country/territory ISO2 code, travel purpose, an optional departure date from the traveler's country followed by the required arrival date in the destination, and passport type. If supplied, departure must be on or before destination arrival. The UI only consumes VisaCompassAfrica result types.
+
+Passport nationality is limited to 54 African countries. Destinations use a worldwide ISO country/territory directory; a selectable destination does not imply that published visa-rule data exists for that route.
 
 ## Activate database-backed searches
 

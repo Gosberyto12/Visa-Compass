@@ -2,7 +2,9 @@
 
 import { revalidatePath } from "next/cache";
 import { resolveEntitlements } from "@/lib/entitlements";
+import { isAfricanCountryCode, isCountryCode } from "@/lib/sample-data";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
+import { isValidDate } from "@/lib/validation";
 
 function text(formData: FormData, key: string): string {
   const value = formData.get(key);
@@ -27,12 +29,12 @@ export async function createSavedTrip(formData: FormData) {
   const arrivalDate = text(formData, "arrivalDate");
   const departureDate = text(formData, "departureDate") || null;
 
-  if (!/^[A-Z]{2}$/.test(originCode) || !/^[A-Z]{2}$/.test(destinationCode) || originCode === destinationCode) {
-    throw new Error("Choose two different valid country codes.");
+  if (!isAfricanCountryCode(originCode) || !isCountryCode(destinationCode) || originCode === destinationCode) {
+    throw new Error("Choose an African passport country and a different valid destination.");
   }
-  if (!/^\d{4}-\d{2}-\d{2}$/.test(arrivalDate) ||
-      (departureDate !== null && (!/^\d{4}-\d{2}-\d{2}$/.test(departureDate) || departureDate < arrivalDate))) {
-    throw new Error("Enter valid travel dates.");
+  if (!isValidDate(arrivalDate) ||
+      (departureDate !== null && (!isValidDate(departureDate) || departureDate > arrivalDate))) {
+    throw new Error("Enter valid travel dates; departure must be on or before arrival.");
   }
   const purposes = ["tourism", "business", "transit", "study", "work", "family_visit", "other"];
   const passportTypes = ["ordinary", "diplomatic", "official", "other"];

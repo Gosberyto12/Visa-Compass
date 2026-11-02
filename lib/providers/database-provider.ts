@@ -34,7 +34,7 @@ function noPublishedData(input: VisaCheckInput, explanation: string): VisaResult
     ],
     confirmationRequired: true,
     disclaimer:
-      "VisaCompass information is for preparation only and does not guarantee a visa or admission. Confirm current requirements with official authorities.",
+      "VisaCompassAfrica information is for preparation only and does not guarantee a visa or admission. Confirm current requirements with official authorities.",
   };
 }
 
@@ -74,7 +74,6 @@ export const databaseVisaProvider: VisaProvider = {
       return noPublishedData(input, "One or both country codes are not in the configured country directory.");
     }
 
-    const endDate = input.departureDate ?? input.arrivalDate;
     const { data, error } = await supabase
       .from("public_visa_assessments")
       .select(
@@ -92,7 +91,7 @@ export const databaseVisaProvider: VisaProvider = {
     }
 
     if ((data.effective_from && input.arrivalDate < data.effective_from) ||
-        (data.effective_until && endDate > data.effective_until)) {
+        (data.effective_until && input.arrivalDate > data.effective_until)) {
       return noPublishedData(input, "The recorded rule does not cover the requested travel dates.");
     }
 
@@ -169,7 +168,7 @@ export const databaseVisaProvider: VisaProvider = {
       limitations,
       confirmationRequired: reviewDue || conflicted,
       disclaimer:
-        "VisaCompass information is for preparation only and does not guarantee a visa or admission. Confirm current requirements with official authorities.",
+        "VisaCompassAfrica information is for preparation only and does not guarantee a visa or admission. Confirm current requirements with official authorities.",
     };
   },
 };

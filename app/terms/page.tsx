@@ -7,7 +7,7 @@ export default function TermsPage() {
     <ContentPage eyebrow="TERMS OF USE" title="Important information">
       <p>This draft should be reviewed by qualified counsel before public use.</p>
       <h2>Information service only</h2>
-      <p>VisaCompass provides preparation information, not visas, legal advice, consular services or a guarantee of admission. Entry requirements can change and the final decision belongs to the relevant authorities.</p>
+      <p>VisaCompassAfrica provides preparation information, not visas, legal advice, consular services or a guarantee of admission. Entry requirements can change and the final decision belongs to the relevant authorities.</p>
       <h2>Check official sources</h2>
       <p>Check the destination&apos;s official immigration or consular source before booking or travelling. Treat information labeled unverified, stale, incomplete or conflicting as requiring independent confirmation.</p>
       <h2>Provider data</h2>

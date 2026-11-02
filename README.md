@@ -1,6 +1,6 @@
-# VisaCompass controlled-pilot starter
+# VisaCompassAfrica controlled-pilot starter
 
-VisaCompass helps travellers organize passport-specific visa information and travel preparation. It is not a visa issuer, government authority, legal adviser, or guarantee of admission. Visa information can change; users must confirm current requirements with the destination authority.
+VisaCompassAfrica helps travellers organize passport-specific visa information and travel preparation. It is not a visa issuer, government authority, legal adviser, or guarantee of admission. Visa information can change; users must confirm current requirements with the destination authority.
 
 ## Implementation assessment and checklist
 
@@ -15,6 +15,7 @@ VisaCompass helps travellers organize passport-specific visa information and tra
 | Editorial/admin | None | Role-protected rule/source/review/publication flows; audit and subscription views | Production operator provisioning, user directory/impersonation, external failed-request monitoring |
 | Delivery | README and Sherpa notes | CI workflow, Vercel config, migration/test/deployment guides | Git remote, production credentials, actual deployment and restore rehearsal |
 | Verified route data | None | Explicit unknown/stale/conflict handling; no visa rules seeded | Reviewed official sources and approved data-entry/review before any route is presented as verified |
+| Country selection | Limited starter list | 54 African passport nationalities and a 249-entry worldwide ISO country/territory destination directory | Destination availability does not imply visa-rule coverage |
 
 ## Requirements
 
@@ -82,8 +83,8 @@ For a linked remote project, review the migration first and then use `npx supaba
   "passportCountry": "TZ",
   "destinationCountry": "KE",
   "purpose": "tourism",
+  "departureDate": "2027-03-12",
   "arrivalDate": "2027-03-15",
-  "departureDate": "2027-03-29",
   "passportType": "ordinary"
 }
 ```

@@ -33,7 +33,7 @@ export default async function DashboardSettingsPage({
   return (
     <main className="simple-page">
       <section className="simple-card">
-        <Link className="simple-brand" href="/dashboard">VisaCompass · Dashboard</Link>
+        <Link className="simple-brand" href="/dashboard">VisaCompassAfrica · Dashboard</Link>
         <p className="section-kicker">ACCOUNT SETTINGS</p>
         <h1>Profile</h1>
         <p>Email: {user.email}</p>

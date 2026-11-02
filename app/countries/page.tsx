@@ -5,7 +5,7 @@ import { countries } from "@/lib/sample-data";
 export default function CountriesPage() {
   return (
     <ContentPage eyebrow="COUNTRY DIRECTORY" title="Explore country information">
-      <p>The country list supports passport and destination selection. A listed country does not mean VisaCompass has verified route-specific entry rules.</p>
+      <p>This directory lists countries and territories available for destination selection. Passport nationality is currently limited to African countries. A listed place does not mean VisaCompassAfrica has verified route-specific entry rules.</p>
       <ul className="country-list">
         {countries.map((country) => (
           <li key={country.code}>
@@ -14,7 +14,7 @@ export default function CountriesPage() {
           </li>
         ))}
       </ul>
-      <p className="save-note">Initial market focus: Tanzania, Kenya, Uganda and Rwanda. Route coverage depends on reviewed source data.</p>
+      <p className="save-note">Passport nationality selection currently supports African countries. Route coverage depends on reviewed source data.</p>
     </ContentPage>
   );
 }

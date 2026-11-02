@@ -2,6 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { getEditorialAuthorization, type EditorialRole } from "@/lib/supabase/authorization";
+import { isAfricanCountryCode } from "@/lib/sample-data";
 
 function text(formData: FormData, key: string): string {
   const value = formData.get(key);
@@ -68,6 +69,17 @@ export async function createDraftRule(formData: FormData) {
       (feeCurrency && !/^[A-Z]{3}$/.test(feeCurrency)) ||
       Boolean(feeAmount) !== Boolean(feeCurrency)) {
     throw new Error("Provide both a non-negative fee amount and a three-letter currency code.");
+  }
+
+  const [originCountry, destinationCountry] = await Promise.all([
+    supabase.from("countries").select("iso2").eq("id", originCountryId).maybeSingle(),
+    supabase.from("countries").select("iso2").eq("id", destinationCountryId).maybeSingle(),
+  ]);
+  if (originCountry.error || destinationCountry.error) {
+    throw new Error("Unable to validate the selected countries.");
+  }
+  if (!originCountry.data || !destinationCountry.data || !isAfricanCountryCode(originCountry.data.iso2)) {
+    throw new Error("Choose an African passport nationality and a valid destination.");
   }
 
   const { error } = await supabase.from("visa_rules").insert({

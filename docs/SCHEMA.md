@@ -44,7 +44,7 @@ npx supabase@latest test db
 ## Source and freshness semantics
 
 - `effective_from` / `effective_until` describe the source rule's effective period.
-- `source_checked_at` records when VisaCompass checked the source.
+- `source_checked_at` records when VisaCompassAfrica checked the source.
 - `next_review_at` schedules editorial review. Missing or elapsed review dates are treated as stale by the public assessment view.
 - `mark_stale_visa_rules()` supports an authorized scheduled maintenance task. Scheduling it is an operator deployment step; the API still redacts expired records even before the status sweep runs.
 - `conflict_flag` never lets the public view expose a chosen pathway. A reviewer must resolve the conflict and approve a new publication.

@@ -27,7 +27,7 @@ export default async function LoginPage({
   return (
     <main className="simple-page">
       <section className="simple-card">
-        <Link className="simple-brand" href="/">VisaCompass</Link>
+        <Link className="simple-brand" href="/">VisaCompassAfrica</Link>
         <p className="section-kicker">WELCOME BACK</p>
         <h1>Sign in</h1>
         <p>Access your saved trips and checklists.</p>
@@ -46,7 +46,7 @@ export default async function LoginPage({
           </form>
         )}
         <p><Link href="/forgot-password">Forgot your password?</Link></p>
-        <p>New to VisaCompass? <Link href="/register">Create an account</Link></p>
+        <p>New to VisaCompassAfrica? <Link href="/register">Create an account</Link></p>
         <Link href="/">Return to search</Link>
       </section>
     </main>

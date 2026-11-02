@@ -27,7 +27,7 @@ export default function PricingPage() {
           </ul>
         </section>
       </div>
-      <p>VisaCompass does not currently process payments or activate paid subscriptions. Critical entry information will not be hidden behind a paid feature.</p>
+      <p>VisaCompassAfrica does not currently process payments or activate paid subscriptions. Critical entry information will not be hidden behind a paid feature.</p>
     </ContentPage>
   );
 }

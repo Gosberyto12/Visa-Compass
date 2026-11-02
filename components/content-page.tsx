@@ -13,11 +13,11 @@ export function ContentPage({
   return (
     <main className="simple-page">
       <article className="simple-card wide-card">
-        <Link className="simple-brand" href="/">VisaCompass</Link>
+        <Link className="simple-brand" href="/">VisaCompassAfrica</Link>
         <p className="section-kicker">{eyebrow}</p>
         <h1>{title}</h1>
         <div className="content-copy">{children}</div>
-        <nav className="content-nav" aria-label="More VisaCompass pages">
+        <nav className="content-nav" aria-label="More VisaCompassAfrica pages">
           <Link href="/visa-check">Visa search</Link>
           <Link href="/countries">Countries</Link>
           <Link href="/pricing">Pricing</Link>

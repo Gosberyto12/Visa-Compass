@@ -163,7 +163,8 @@ create table public.saved_trips (
   trip_status text not null default 'planning' check (trip_status in ('planning', 'ready', 'completed', 'cancelled')),
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now(),
-  check (departure_date is null or departure_date >= arrival_date)
+  constraint saved_trips_date_order_check
+    check (departure_date is null or departure_date <= arrival_date)
 );
 
 create table public.trip_checklists (

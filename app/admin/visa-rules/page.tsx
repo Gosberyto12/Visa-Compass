@@ -1,4 +1,5 @@
 import { createDraftRule, submitRuleForReview, attachSource, createVisaRequirement } from "@/app/admin/actions";
+import { isAfricanCountryCode } from "@/lib/sample-data";
 import { getEditorialAuthorization } from "@/lib/supabase/authorization";
 
 export default async function AdminVisaRulesPage() {
@@ -14,6 +15,7 @@ export default async function AdminVisaRulesPage() {
     throw new Error("Unable to load visa rules and source choices.");
   }
   const countryMap = new Map((countriesResult.data ?? []).map((country) => [country.id, `${country.common_name} (${country.iso2})`]));
+  const africanOriginCountries = (countriesResult.data ?? []).filter((country) => isAfricanCountryCode(country.iso2));
   const sources = sourcesResult.data ?? [];
   const editableRules = (rulesResult.data ?? []).filter((rule) =>
     ["draft", "stale", "withdrawn"].includes(rule.verification_status)
@@ -25,7 +27,7 @@ export default async function AdminVisaRulesPage() {
       <h1>Visa rules</h1>
       <p>Create source-backed drafts. New records cannot be published directly.</p>
       <form className="simple-form trip-form admin-form" action={createDraftRule}>
-        <label>Passport nationality<select name="originCountryId" required>{(countriesResult.data ?? []).map((country) => <option key={country.id} value={country.id}>{country.common_name}</option>)}</select></label>
+        <label>Passport nationality<select name="originCountryId" required>{africanOriginCountries.map((country) => <option key={country.id} value={country.id}>{country.common_name}</option>)}</select></label>
         <label>Destination<select name="destinationCountryId" required>{(countriesResult.data ?? []).map((country) => <option key={country.id} value={country.id}>{country.common_name}</option>)}</select></label>
         <label>Passport type<select name="passportType" required><option value="ordinary">Ordinary</option><option value="diplomatic">Diplomatic</option><option value="official">Official</option><option value="other">Other</option></select></label>
         <label>Travel purpose<select name="purpose" required><option value="tourism">Tourism</option><option value="business">Business</option><option value="transit">Transit</option><option value="study">Study</option><option value="work">Work</option><option value="family_visit">Family visit</option><option value="other">Other</option></select></label>

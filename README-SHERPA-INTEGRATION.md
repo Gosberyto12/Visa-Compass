@@ -1,4 +1,4 @@
-# VisaCompass provider integration status
+# VisaCompassAfrica provider integration status
 
 The API expects a normalized request with passport nationality, destination, travel purpose, arrival date, optional departure date and passport type. The default `VISA_PROVIDER=mock` is safe and does not return a visa determination.
 

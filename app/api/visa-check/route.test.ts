@@ -20,8 +20,8 @@ test("API returns the normalized unknown result with a request id", async () => 
     passportCountry: "TZ",
     destinationCountry: "KE",
     purpose: "tourism",
+    departureDate: "2027-03-12",
     arrivalDate: "2027-03-15",
-    departureDate: "2027-03-29",
   })));
   const payload = await response.json();
 

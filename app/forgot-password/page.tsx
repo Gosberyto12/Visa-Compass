@@ -17,7 +17,7 @@ export default async function ForgotPasswordPage({
   return (
     <main className="simple-page">
       <section className="simple-card">
-        <Link className="simple-brand" href="/">VisaCompass</Link>
+        <Link className="simple-brand" href="/">VisaCompassAfrica</Link>
         <p className="section-kicker">ACCOUNT RECOVERY</p>
         <h1>Reset your password</h1>
         <p>We will send a reset link if the account can be recovered.</p>

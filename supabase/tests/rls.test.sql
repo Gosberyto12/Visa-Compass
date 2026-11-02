@@ -1,5 +1,5 @@
 begin;
-select plan(9);
+select plan(10);
 select set_config('request.jwt.claim.role', 'service_role', true);
 
 insert into auth.users (
@@ -69,6 +69,20 @@ select is(
   (select count(*)::integer from public.saved_trips where id = '33333333-3333-4333-8333-333333333333'),
   1,
   'user B can read their own trip'
+);
+throws_ok(
+  $$insert into public.saved_trips (
+    user_id, origin_country_id, destination_country_id, travel_purpose,
+    passport_type, departure_date, arrival_date
+  ) values (
+    '22222222-2222-4222-8222-222222222222',
+    (select id from public.countries where iso2 = 'TZ'),
+    (select id from public.countries where iso2 = 'KE'),
+    'tourism', 'ordinary', '2027-03-16', '2027-03-15'
+  )$$,
+  '23514',
+  null,
+  'departure cannot be after destination arrival'
 );
 select set_config('request.jwt.claim.sub', '11111111-1111-4111-8111-111111111111', true);
 select is(

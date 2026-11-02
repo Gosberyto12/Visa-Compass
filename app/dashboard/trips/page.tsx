@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { addChecklistItem, createSavedTrip, toggleChecklistItem, updateChecklistNotes } from "@/app/dashboard/actions";
-import { countries } from "@/lib/sample-data";
+import { africanCountries, countries } from "@/lib/sample-data";
 import { isSupabaseConfigured } from "@/lib/supabase/config";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 
@@ -34,17 +34,17 @@ export default async function TripsPage() {
   return (
     <main className="simple-page">
       <section className="simple-card wide-card">
-        <Link className="simple-brand" href="/dashboard">VisaCompass · Dashboard</Link>
+        <Link className="simple-brand" href="/dashboard">VisaCompassAfrica · Dashboard</Link>
         <p className="section-kicker">YOUR PLANS</p>
         <h1>Saved trips</h1>
         <p>Trip plans and checklist notes are private to your account.</p>
         <form className="simple-form trip-form" action={createSavedTrip}>
-          <label>Passport nationality<select name="originCountry" required>{countries.map((country) => <option key={country.code} value={country.code}>{country.name}</option>)}</select></label>
-          <label>Destination<select name="destinationCountry" required>{countries.filter((country) => country.code !== "TZ").map((country) => <option key={country.code} value={country.code}>{country.name}</option>)}</select></label>
+          <label>Passport nationality<select name="originCountry" defaultValue="TZ" required>{africanCountries.map((country) => <option key={country.code} value={country.code}>{country.name}</option>)}</select></label>
+          <label>Destination<select name="destinationCountry" defaultValue="KE" required>{countries.map((country) => <option key={country.code} value={country.code}>{country.name}</option>)}</select></label>
           <label>Travel purpose<select name="purpose" required><option value="tourism">Tourism</option><option value="business">Business</option><option value="transit">Transit</option><option value="study">Study</option><option value="work">Work</option><option value="family_visit">Family visit</option><option value="other">Other</option></select></label>
           <label>Passport type<select name="passportType" required><option value="ordinary">Ordinary passport</option><option value="diplomatic">Diplomatic passport</option><option value="official">Official passport</option><option value="other">Other document</option></select></label>
-          <label>Arrival date<input name="arrivalDate" type="date" required /></label>
-          <label>Departure date (optional)<input name="departureDate" type="date" /></label>
+          <label>Departure from your country (optional)<input name="departureDate" type="date" /></label>
+          <label>Arrival in destination<input name="arrivalDate" type="date" required /></label>
           <button className="search-button" type="submit">Save trip</button>
         </form>
         <div className="saved-trip-list">
@@ -52,7 +52,7 @@ export default async function TripsPage() {
           {(trips ?? []).map((trip) => (
             <article className="saved-trip" key={trip.id}>
               <h2>{countryName.get(trip.origin_country_id) ?? "Passport"} → {countryName.get(trip.destination_country_id) ?? "Destination"}</h2>
-              <p>{trip.travel_purpose.replaceAll("_", " ")} · {trip.arrival_date}{trip.departure_date ? ` to ${trip.departure_date}` : ""}</p>
+              <p>{trip.travel_purpose.replaceAll("_", " ")} · {trip.departure_date ? `Depart ${trip.departure_date} · ` : ""}Arrive {trip.arrival_date}</p>
               <h3>Preparation checklist</h3>
               <ul className="checklist-items">
                 {(checklistItems ?? []).filter((item) => item.saved_trip_id === trip.id).map((item) => (

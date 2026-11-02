@@ -19,7 +19,7 @@ export default async function RegisterPage({
   return (
     <main className="simple-page">
       <section className="simple-card">
-        <Link className="simple-brand" href="/">VisaCompass</Link>
+        <Link className="simple-brand" href="/">VisaCompassAfrica</Link>
         <p className="section-kicker">CREATE YOUR ACCOUNT</p>
         <h1>Save your travel plans</h1>
         <p>Saved trips are private to your authenticated account.</p>

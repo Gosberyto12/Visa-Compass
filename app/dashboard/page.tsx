@@ -27,7 +27,7 @@ export default async function DashboardPage() {
   return (
     <main className="simple-page">
       <section className="simple-card dashboard-card">
-        <Link className="simple-brand" href="/">VisaCompass</Link>
+        <Link className="simple-brand" href="/">VisaCompassAfrica</Link>
         <p className="section-kicker">YOUR TRAVEL SPACE</p>
         <h1>Hello{profile.data?.display_name ? `, ${profile.data.display_name}` : ""}</h1>
         <p>{user.email}</p>

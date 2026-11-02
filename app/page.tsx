@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { countries } from "@/lib/sample-data";
+import { africanCountries, countries } from "@/lib/sample-data";
 import type { VisaResult } from "@/lib/visa-types";
 
 function isRecord(value: unknown): value is Record<string, unknown> {
@@ -145,9 +145,9 @@ export default function Home() {
       </div>
 
       <header className="nav wrap">
-        <Link className="brand" href="/" aria-label="VisaCompass home">
+        <Link className="brand" href="/" aria-label="VisaCompassAfrica home">
           <span className="brand-mark">✦</span>
-          <span>Visa<span className="brand-light">Compass</span></span>
+          <span>Visa<span className="brand-light">CompassAfrica</span></span>
         </Link>
         <nav aria-label="Main navigation">
           <a href="#how-it-works">How it works</a>
@@ -206,7 +206,7 @@ export default function Home() {
               }}
               required
             >
-              {countries.map((country) => <option key={country.code} value={country.code}>{country.name}</option>)}
+              {africanCountries.map((country) => <option key={country.code} value={country.code}>{country.name}</option>)}
             </select>
             <small>Select the country that issued your passport.</small>
           </label>
@@ -237,14 +237,25 @@ export default function Home() {
             <small>Choose the primary purpose of travel.</small>
           </label>
           <label className="field">
-            <span className="field-label">PLANNED ARRIVAL</span>
-            <input type="date" value={arrivalDate} onChange={(event) => setArrivalDate(event.target.value)} required />
-            <small>Use the date you expect to enter.</small>
+            <span className="field-label">PLANNED DEPARTURE FROM YOUR COUNTRY</span>
+            <input
+              type="date"
+              value={departureDate}
+              onChange={(event) => setDepartureDate(event.target.value)}
+              max={arrivalDate || undefined}
+            />
+            <small>When you leave your country of departure. Optional if unknown.</small>
           </label>
           <label className="field">
-            <span className="field-label">PLANNED DEPARTURE</span>
-            <input type="date" value={departureDate} onChange={(event) => setDepartureDate(event.target.value)} min={arrivalDate || undefined} />
-            <small>Optional if your return date is unknown.</small>
+            <span className="field-label">PLANNED ARRIVAL IN {selectedDestination.toUpperCase()}</span>
+            <input
+              type="date"
+              value={arrivalDate}
+              onChange={(event) => setArrivalDate(event.target.value)}
+              min={departureDate || undefined}
+              required
+            />
+            <small>When you expect to enter your destination.</small>
           </label>
           <label className="field">
             <span className="field-label">PASSPORT TYPE</span>
@@ -270,8 +281,8 @@ export default function Home() {
                 <div className="section-kicker">YOUR TRAVEL ASSESSMENT</div>
                 <h3 id="result-heading">{selectedPassport} <span className="result-arrow">→</span> {selectedDestination}</h3>
                 <p className="result-subtitle">
-                  {purpose.replaceAll("_", " ")} · Arrival {arrivalDate}
-                  {departureDate ? ` · Departure ${departureDate}` : ""}
+                  {purpose.replaceAll("_", " ")} ·
+                  {departureDate ? ` Departure ${departureDate} ·` : ""} Arrival {arrivalDate}
                 </p>
               </div>
               <span className="status-badge">
@@ -388,7 +399,7 @@ export default function Home() {
           <div className="region-row"><span className="region-emoji">🌍</span><span><strong>Initial focus</strong><small>Tanzania, Kenya, Uganda and Rwanda</small></span><span className="region-arrow">↗</span></div>
           <div className="region-row"><span className="region-emoji">✈️</span><span><strong>Worldwide routes</strong><small>Coverage depends on verified data availability</small></span><span className="region-arrow">↗</span></div>
           <div className="region-row"><span className="region-emoji">🛡️</span><span><strong>Source-led information</strong><small>Unverified information is identified clearly</small></span><span className="region-arrow">↗</span></div>
-          <div className="region-note">VisaCompass is not a government authority and cannot guarantee admission.</div>
+          <div className="region-note">VisaCompassAfrica is not a government authority and cannot guarantee admission.</div>
         </div>
       </section>
 
@@ -400,7 +411,7 @@ export default function Home() {
       </section>
 
       <footer className="footer wrap">
-        <Link className="brand" href="/" aria-label="VisaCompass home"><span className="brand-mark">✦</span><span>Visa<span className="brand-light">Compass</span></span></Link>
+        <Link className="brand" href="/" aria-label="VisaCompassAfrica home"><span className="brand-mark">✦</span><span>Visa<span className="brand-light">CompassAfrica</span></span></Link>
         <p>Travel better informed. Arrive better prepared.</p>
         <nav className="footer-links" aria-label="Footer navigation">
           <Link href="/about">About</Link><Link href="/pricing">Pricing</Link><Link href="/privacy">Privacy</Link><Link href="/terms">Terms</Link><Link href="/contact">Contact</Link><Link href="/countries">Countries</Link>
