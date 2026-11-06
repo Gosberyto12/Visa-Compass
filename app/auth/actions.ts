@@ -22,11 +22,21 @@ export async function signIn(formData: FormData) {
   const password = formText(formData, "password");
   if (!email || !password) redirect("/login?error=missing_fields");
 
-  const { error } = await supabase.auth.signInWithPassword({ email, password });
-  if (error) redirect("/login?error=sign_in_failed");
-  redirect("/dashboard");
+
+const { error } = await supabase.auth.signInWithPassword({ email, password });
+
+if (error) {
+  console.error("[VisaCompass Login Error]", {
+    message: error.message,
+    status: error.status,
+    code: error.code,
+  });
+
+  redirect("/login?error=sign_in_failed");
 }
 
+redirect("/dashboard");
+}
 export async function signUp(formData: FormData) {
   const supabase = await createSupabaseServerClient();
   if (!supabase) redirect("/register?error=configuration");
