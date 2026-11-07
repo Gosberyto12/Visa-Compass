@@ -32,7 +32,7 @@ if (error) {
     code: error.code,
   });
 
-  redirect("/login?error=sign_in_failed");
+  redirect(`/login?error=${encodeURIComponent(error.message)}`);
 }
 
 redirect("/dashboard");
