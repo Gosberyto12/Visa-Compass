@@ -54,7 +54,10 @@ export async function signUp(formData: FormData) {
       emailRedirectTo: `${getOrigin()}/auth/callback`,
     },
   });
-  if (error) redirect("/register?error=registration_failed");
+  if (error) {
+  console.error("SUPABASE SIGNUP ERROR:", error.message);
+  redirect(`/register?error=${encodeURIComponent(error.message)}`);
+}
   if (data.session) redirect("/dashboard");
   redirect("/login?message=check_email");
 }
