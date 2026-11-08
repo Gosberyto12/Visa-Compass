@@ -126,29 +126,48 @@ export async function toggleChecklistItem(formData: FormData) {
 }
 
 export async function saveProfile(formData: FormData) {
-  const { supabase, user } = await getAuthenticatedClient();
+  try {
+    const { supabase, user } = await getAuthenticatedClient();
 
-  const displayName = text(formData, "displayName");
+    const displayName = text(formData, "displayName");
 
-  if (displayName.length > 100) {
-    throw new Error("Name must be 100 characters or fewer.");
+    console.log("PROFILE SAVE STARTED:", {
+      userId: user.id,
+      displayName,
+    });
+
+    if (displayName.length > 100) {
+      redirect("/dashboard/settings?error=profile_update_failed");
+    }
+
+    const { data, error } = await supabase
+      .from("profiles")
+      .update({ display_name: displayName || null })
+      .eq("id", user.id)
+      .select("id, display_name");
+
+    if (error) {
+      console.error("PROFILE UPDATE ERROR:", error);
+      redirect("/dashboard/settings?error=profile_update_failed");
+    }
+
+    if (!data || data.length === 0) {
+      console.error("PROFILE UPDATE: No rows updated.");
+      redirect("/dashboard/settings?error=profile_update_failed");
+    }
+
+    console.log("PROFILE UPDATE SUCCESS:", data);
+
+    revalidatePath("/dashboard/settings");
+    revalidatePath("/dashboard");
+
+    redirect("/dashboard/settings?message=profile_updated");
+  } catch (error) {
+    if (error instanceof Error && error.message === "NEXT_REDIRECT") {
+      throw error;
+    }
+
+    console.error("PROFILE SAVE FAILED:", error);
+    redirect("/dashboard/settings?error=profile_update_failed");
   }
-
-  const { data, error } = await supabase
-    .from("profiles")
-    .update({ display_name: displayName || null })
-    .eq("id", user.id)
-    .select("id, display_name")
-    .single();
-
-  if (error) {
-    console.error("PROFILE UPDATE ERROR:", error);
-    throw new Error("Unable to save profile settings.");
-  }
-
-  console.log("PROFILE UPDATED:", data);
-
-  revalidatePath("/dashboard/settings");
-  revalidatePath("/dashboard");
-  redirect("/dashboard/settings?message=profile_updated");
 }

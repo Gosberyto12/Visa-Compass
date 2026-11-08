@@ -6,6 +6,8 @@ import { isSupabaseConfigured } from "@/lib/supabase/config";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 
 const messages: Record<string, string> = {
+  profile_updated: "Your display name was updated successfully.",
+  profile_update_failed: "Unable to update your display name. Please try again.",
   password_too_short: "Use at least 10 characters for the new password.",
   password_update_failed: "Password update failed. Please try again.",
   deletion_confirmation: "Type DELETE exactly to confirm account removal.",
@@ -36,6 +38,17 @@ export default async function DashboardSettingsPage({
         <Link className="simple-brand" href="/dashboard">VisaCompassAfrica · Dashboard</Link>
         <p className="section-kicker">ACCOUNT SETTINGS</p>
         <h1>Profile</h1>
+        {params.error && (
+  <p className="form-notice" role="alert">
+    {messages[params.error] ?? "The requested settings change failed."}
+  </p>
+)}
+
+{params.message === "profile_updated" && (
+  <p className="form-notice" role="status">
+    Your display name was updated successfully.
+  </p>
+)}
         <p>Email: {user.email}</p>
         <form className="simple-form" action={saveProfile}>
           <label>Display name<input name="displayName" type="text" maxLength={100} defaultValue={profile?.display_name ?? ""} /></label>
