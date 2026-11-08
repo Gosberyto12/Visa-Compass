@@ -1,5 +1,5 @@
 "use server";
-
+import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 import { resolveEntitlements } from "@/lib/entitlements";
 import { isAfricanCountryCode, isCountryCode } from "@/lib/sample-data";
@@ -127,9 +127,28 @@ export async function toggleChecklistItem(formData: FormData) {
 
 export async function saveProfile(formData: FormData) {
   const { supabase, user } = await getAuthenticatedClient();
+
   const displayName = text(formData, "displayName");
-  if (displayName.length > 100) throw new Error("Name must be 100 characters or fewer.");
-  const { error } = await supabase.from("profiles").update({ display_name: displayName || null }).eq("id", user.id);
-  if (error) throw new Error("Unable to save profile settings.");
+
+  if (displayName.length > 100) {
+    throw new Error("Name must be 100 characters or fewer.");
+  }
+
+  const { data, error } = await supabase
+    .from("profiles")
+    .update({ display_name: displayName || null })
+    .eq("id", user.id)
+    .select("id, display_name")
+    .single();
+
+  if (error) {
+    console.error("PROFILE UPDATE ERROR:", error);
+    throw new Error("Unable to save profile settings.");
+  }
+
+  console.log("PROFILE UPDATED:", data);
+
   revalidatePath("/dashboard/settings");
+  revalidatePath("/dashboard");
+  redirect("/dashboard/settings?message=profile_updated");
 }
