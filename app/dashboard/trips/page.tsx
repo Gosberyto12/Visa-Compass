@@ -5,7 +5,12 @@ import { africanCountries, countries } from "@/lib/sample-data";
 import { isSupabaseConfigured } from "@/lib/supabase/config";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 
-export default async function TripsPage() {
+export default async function TripsPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ error?: string }>;
+}) {
+  const { error } = await searchParams;
   if (!isSupabaseConfigured()) {
     return <main className="simple-page"><section className="simple-card"><h1>Saved trips are unavailable</h1><p>Configure Supabase to enable private trip storage.</p><Link href="/dashboard">Return to dashboard</Link></section></main>;
   }
@@ -15,12 +20,12 @@ export default async function TripsPage() {
   if (authError) throw new Error("Unable to authenticate for saved trips.");
   if (!user) redirect("/login");
 
-  const { data: trips, error } = await supabase
+  const { data: trips, error: tripsError } = await supabase
     .from("saved_trips")
     .select("id, arrival_date, departure_date, travel_purpose, trip_status, origin_country_id, destination_country_id")
     .eq("user_id", user.id)
     .order("created_at", { ascending: false });
-  if (error) throw new Error("Unable to load your saved trips.");
+  if (tripsError) throw new Error("Unable to load your saved trips.");
 
   const tripIds = (trips ?? []).map((trip) => trip.id);
   const { data: checklistItems, error: checklistError } = tripIds.length
@@ -37,6 +42,11 @@ export default async function TripsPage() {
         <Link className="simple-brand" href="/dashboard">VisaCompassAfrica · Dashboard</Link>
         <p className="section-kicker">YOUR PLANS</p>
         <h1>Saved trips</h1>
+       {error === "trip_limit" && (
+  <p className="error-message">
+    Your Free plan allows one saved trip. Upgrade to Premium to save more trips.
+  </p>
+)}
         <p>Trip plans and checklist notes are private to your account.</p>
         <form className="simple-form trip-form" action={createSavedTrip}>
           <label>Passport nationality<select name="originCountry" defaultValue="TZ" required>{africanCountries.map((country) => <option key={country.code} value={country.code}>{country.name}</option>)}</select></label>

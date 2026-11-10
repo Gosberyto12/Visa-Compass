@@ -56,7 +56,7 @@ export async function createSavedTrip(formData: FormData) {
       .eq("user_id", user.id);
     if (error) throw new Error("Unable to check your saved-trip limit.");
     if ((count ?? 0) >= 1) {
-      throw new Error("Free accounts can save one trip. Multiple saved trips are a planned premium feature.");
+  redirect("/dashboard/trips?error=trip_limit");
     }
   }
 
